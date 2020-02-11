@@ -1,0 +1,26 @@
+{
+  "name": "daangn-server",
+  "version": "1.0.0",
+  "description": "당근마켓 클론 프로젝트",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon --exec babel-node src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wansiklee/daangn-server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wansiklee/daangn-server/issues"
+  },
+  "homepage": "https://github.com/wansiklee/daangn-server#readme",
+  "dependencies": {
+    "@babel/core": "^7.8.4",
+    "@babel/node": "^7.8.4",
+    "@babel/preset-env": "^7.8.4",
+    "express": "^4.17.1",
+    "nodemon": "^2.0.2"
+  }
+}

@@ -1,11 +1,18 @@
 import express from "express";
 import routes from "./routes";
 
+import {
+  upload,
+  productDetail,
+  editProduct,
+  deleteProduct
+} from "../controllers/product";
+
 const productRouter = express.Router();
 
-productRouter.get(routes.upload, (req, res) => res.send("상품 등록"));
-productRouter.get(routes.productDetail, (req, res) => res.send("상품 상세"));
-productRouter.get(routes.editProduct, (req, res) => res.send("상품 수정"));
-productRouter.get(routes.deleteProduct, (req, res) => res.send("상품 삭제"));
+productRouter.get(routes.upload, upload);
+productRouter.get(routes.productDetail, productDetail);
+productRouter.get(routes.editProduct, editProduct);
+productRouter.get(routes.deleteProduct, deleteProduct);
 
 export default productRouter;

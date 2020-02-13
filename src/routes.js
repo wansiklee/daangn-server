@@ -1,5 +1,3 @@
-import { logout } from "../controllers/user";
-
 // Global
 const HOME = "/";
 const SIGNUP = "/signup";
@@ -24,7 +22,7 @@ const routes = {
   home: HOME,
   signup: SIGNUP,
   login: LOGIN,
-  logout: logout,
+  logout: LOGOUT,
   search: SEARCH,
   users: USERS,
   userDetail: USER_DETAIL,

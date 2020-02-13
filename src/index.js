@@ -3,7 +3,7 @@ import bodyParser from "body-parser";
 import helmet from "helmet";
 import morgan from "morgan";
 import api from "./routers";
-import "./database";
+import "./db";
 
 const app = express();
 

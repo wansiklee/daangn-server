@@ -1,5 +1,5 @@
 import Joi from "@hapi/joi";
-import User from "../../../models/User";
+import User from "../../../db/models/User";
 
 // Sign Up
 export const signup = async (req, res) => {
@@ -22,11 +22,36 @@ export const signup = async (req, res) => {
 
   // reuslt = value || value, error
   const result = schema.validate(body);
-  console.log(result);
+
   if (result.error) {
     res.status(400);
     req.body = result.error;
     return;
+  }
+
+  // Passed Signup form
+  const { username, email, password } = result.value;
+
+  try {
+    // Check username or email existancy
+    const existancy = await User.findExistancy({ username, email });
+    if (existancy) {
+      const exist = existancy.username === username ? "닉네임" : "이메일";
+      res.status(409).json({ msg: `${exist}이 이미 존재합니다.` });
+      return;
+    }
+
+    // Create New User
+    const user = new User({
+      username,
+      email
+    });
+    await user.setPassword(password);
+    await user.save();
+
+    res.json({ user });
+  } catch (e) {
+    console.log(e);
   }
 };
 

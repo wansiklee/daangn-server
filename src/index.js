@@ -8,7 +8,10 @@ import api from "./routers/api";
 import global from "./routers/global";
 import user from "./routers/user";
 import routes from "./routes";
+
+// database
 import "./db";
+import "./db/models/User";
 
 const app = express();
 

@@ -1,8 +1,5 @@
 // Global
 const HOME = "/";
-const SIGNUP = "/signup";
-const LOGIN = "/login";
-const LOGOUT = "/logout";
 const SEARCH = "/search";
 
 // Users
@@ -11,7 +8,15 @@ const USER_DETAIL = "/:id";
 const EDIT_PROFILE = "/:id/edit-profile";
 const CHANGE_PASSWORD = "/:id/change-password";
 
-// Products
+const API = "/api";
+
+// api Auth
+const AUTH = "/auth";
+const SIGNUP = "/signup";
+const LOGIN = "/login";
+const LOGOUT = "/logout";
+
+// api Products
 const PRODUCTS = "/products";
 const UPLOAD = "/upload";
 const PRODUCT_DETAIL = "/:id";
@@ -20,14 +25,16 @@ const DELETE_PRODUCT = "/:id/delete";
 
 const routes = {
   home: HOME,
-  signup: SIGNUP,
-  login: LOGIN,
-  logout: LOGOUT,
   search: SEARCH,
   users: USERS,
   userDetail: USER_DETAIL,
   editProfile: EDIT_PROFILE,
   changePassword: CHANGE_PASSWORD,
+  api: API,
+  auth: AUTH,
+  signup: SIGNUP,
+  login: LOGIN,
+  logout: LOGOUT,
   products: PRODUCTS,
   upload: UPLOAD,
   productDetail: PRODUCT_DETAIL,

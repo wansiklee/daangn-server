@@ -17,3 +17,4 @@
 - MongoDB 세팅, ODM으로 mongoose 사용
 - User Model 생성
 - 검증 라이브러리 joi를 사용하기로 함
+- 각 route들 경로 재설정

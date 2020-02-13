@@ -1,6 +1,8 @@
+require("dotenv").config();
+
 import mongoose from "mongoose";
 
-mongoose.connect("mongodb://localhost:27017/daangn", {
+mongoose.connect(process.env.MONGO_URI, {
   useUnifiedTopology: true,
   useNewUrlParser: true
 });

@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 import express from "express";
 import bodyParser from "body-parser";
 import helmet from "helmet";
@@ -10,7 +12,7 @@ import "./db";
 
 const app = express();
 
-const PORT = 4000;
+const PORT = process.env.PORT || 4000;
 
 // Express Middlewares
 app.use(bodyParser.json());

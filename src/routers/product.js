@@ -1,5 +1,5 @@
 import express from "express";
-import routes from "./routes";
+import routes from "../routes";
 
 import {
   upload,
@@ -8,11 +8,11 @@ import {
   deleteProduct
 } from "../controllers/product";
 
-const productRouter = express.Router();
+const router = express.Router();
 
-productRouter.get(routes.upload, upload);
-productRouter.get(routes.productDetail, productDetail);
-productRouter.get(routes.editProduct, editProduct);
-productRouter.get(routes.deleteProduct, deleteProduct);
+router.get(routes.upload, upload);
+router.get(routes.productDetail, productDetail);
+router.get(routes.editProduct, editProduct);
+router.get(routes.deleteProduct, deleteProduct);
 
-export default productRouter;
+export default router;

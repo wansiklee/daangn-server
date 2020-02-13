@@ -2,10 +2,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import helmet from "helmet";
 import morgan from "morgan";
-import routes from "./routers/routes";
-import globalRouter from "./routers/global";
-import userRouter from "./routers/user";
-import productRouter from "./routers/product";
+import api from "./routers";
 
 const app = express();
 
@@ -17,10 +14,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(helmet());
 app.use(morgan("dev"));
 
-// Routers
-app.use(routes.home, globalRouter);
-app.use(routes.users, userRouter);
-app.use(routes.products, productRouter);
+// Routes
+app.use("/api", api);
 
 app.listen(PORT, () => {
   console.log(`♬  daangn server is listening on port ${PORT}!`);

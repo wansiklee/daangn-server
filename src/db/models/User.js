@@ -53,6 +53,11 @@ User.methods.generateToken = function() {
   return token;
 };
 
+// Check Valid Password
+User.methods.checkPassword = async function(password) {
+  return await bcrypt.compare(password, this.password);
+};
+
 // Check username / email existancy
 User.statics.findExistancy = function({ username, email }) {
   return this.findOne({

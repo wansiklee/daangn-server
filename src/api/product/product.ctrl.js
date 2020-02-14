@@ -35,7 +35,26 @@ export const upload = async (req, res) => {
   }
 };
 
-export const productDetail = (req, res) => res.send("상품 상세");
+/***********************
+  GET /api/products/:id
+************************/
+export const productDetail = async (req, res) => {
+  const {
+    params: { id }
+  } = req;
+
+  try {
+    const product = await Product.findById(id).exec();
+    if (!product) {
+      res.status(404); // Not Found
+      return;
+    }
+    res.json({ data: product });
+  } catch (e) {
+    console.log(e);
+    res.status(500);
+  }
+};
 
 export const editProduct = (req, res) => res.send("상품 수정");
 

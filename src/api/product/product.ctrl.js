@@ -56,7 +56,28 @@ export const productDetail = async (req, res) => {
   }
 };
 
-export const editProduct = (req, res) => res.send("상품 수정");
+/***********************
+  PATCH /api/products/:id
+************************/
+export const editProduct = async (req, res) => {
+  const {
+    params: { id },
+    body
+  } = req;
+  try {
+    const product = await Product.findByIdAndUpdate(id, body, {
+      new: true
+    }).exec();
+    if (!product) {
+      res.status(404); // Not Found
+      return;
+    }
+    res.json({ data: product });
+  } catch (e) {
+    console.log(e);
+    res.status(500);
+  }
+};
 
 export const deleteProduct = (req, res) => res.send("상품 삭제");
 

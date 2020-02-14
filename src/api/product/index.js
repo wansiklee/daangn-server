@@ -12,9 +12,9 @@ const product = express.Router();
 
 product.get("/", list);
 product.post("/", upload);
+product.get("/search", search);
 product.get("/:id", productDetail);
 product.patch("/:id", editProduct);
 product.delete("/:id", deleteProduct);
-product.get("/search", search);
 
 export default product;

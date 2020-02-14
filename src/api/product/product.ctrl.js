@@ -96,4 +96,25 @@ export const deleteProduct = async (req, res) => {
   }
 };
 
-export const search = (req, res) => res.send("검색");
+/***************************
+  GET /api/products/search
+****************************/
+export const search = async (req, res) => {
+  const {
+    query: { term }
+  } = req;
+  try {
+    const products = await Product.find({
+      title: { $regex: term, $options: "i" }
+    }).exec();
+    console.log(products);
+    if (!products) {
+      res.json({ msg: "검색 결과가 없습니다." });
+      return;
+    }
+    res.json({ data: products });
+  } catch (e) {
+    console.log(e);
+    res.status(500);
+  }
+};

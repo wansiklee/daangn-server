@@ -101,6 +101,8 @@ export const login = async (req, res) => {
       maxAge: 1000 * 60 * 60 * 24 * 7,
       httpOnly: true
     });
+
+    res.json({ data: user.serialize(), msg: "로그인 되었습니다!" });
   } catch (e) {
     console.log(e);
     res.status(500);

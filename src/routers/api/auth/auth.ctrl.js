@@ -109,4 +109,18 @@ export const login = async (req, res) => {
   }
 };
 
+// GET /api/auth/check
+export const check = async (req, res) => {
+  const {
+    param: { user }
+  } = req;
+
+  if (!user) {
+    res.status(401);
+    return;
+  }
+
+  res.json({ user });
+};
+
 export const logout = (req, res) => res.send("로그아웃");

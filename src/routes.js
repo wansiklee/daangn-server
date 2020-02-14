@@ -15,6 +15,7 @@ const AUTH = "/auth";
 const SIGNUP = "/signup";
 const LOGIN = "/login";
 const LOGOUT = "/logout";
+const CHECK = "/check";
 
 // api Products
 const PRODUCTS = "/products";
@@ -35,6 +36,7 @@ const routes = {
   signup: SIGNUP,
   login: LOGIN,
   logout: LOGOUT,
+  check: CHECK,
   products: PRODUCTS,
   upload: UPLOAD,
   productDetail: PRODUCT_DETAIL,

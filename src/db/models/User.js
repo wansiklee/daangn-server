@@ -36,6 +36,23 @@ User.methods.serialize = function() {
   return data;
 };
 
+User.methods.generateToken = function() {
+  const token = jwt.sign(
+    // payload
+    {
+      _id: this._id,
+      username: this.username
+    },
+    // secret key
+    process.env.JWT_SECRET,
+    // options
+    {
+      expiresIn: "7d"
+    }
+  );
+  return token;
+};
+
 // Check username / email existancy
 User.statics.findExistancy = function({ username, email }) {
   return this.findOne({

@@ -19,8 +19,13 @@
 - 검증 라이브러리 joi를 사용하기로 함
 - 각 route들 경로 재설정
 - bcrypt로 password 암호화
-- 회원가입 파트 완료 - Postman으로 테스트 완료
+- 회원가입 파트 - 계정 생성 Postman으로 테스트 완료
 - MongoDB GUI인 robomongo 다운로드
+
+### 4일차
+
+- 회원가입 성공 후 클라이언트에 보낼 정보에 필요없는 password 삭제
+- 인증된 유저에게 jsonwebtoken 생성
 
 ## Issues
 

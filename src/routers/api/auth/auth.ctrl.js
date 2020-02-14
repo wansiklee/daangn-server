@@ -48,9 +48,17 @@ export const signup = async (req, res) => {
     await user.setPassword(password);
     await user.save();
 
+    // configure jwt to httpOnly cookie
+    const token = user.generateToken();
+    res.cookie("jwt", token, {
+      maxAge: 1000 * 60 * 60 * 24 * 7, // 7d
+      httpOnly: true
+    });
+
     res.json({ data: user.serialize(), msg: "가입되었습니다!" });
   } catch (e) {
     console.log(e);
+    res.status(500);
   }
 };
 

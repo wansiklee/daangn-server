@@ -24,8 +24,7 @@ export const signup = async (req, res) => {
   const result = schema.validate(body);
 
   if (result.error) {
-    res.status(400);
-    req.body = result.error;
+    res.status(400).json({ msg: result.error });
     return;
   }
 
@@ -37,7 +36,7 @@ export const signup = async (req, res) => {
     const existancy = await User.findExistancy({ username, email });
     if (existancy) {
       const exist = existancy.username === username ? "닉네임" : "이메일";
-      res.status(409).json({ msg: `${exist}이 이미 존재합니다.` });
+      res.status(409).json({ msg: `이미 등록된 ${exist} 입니다.` });
       return;
     }
 
@@ -49,7 +48,7 @@ export const signup = async (req, res) => {
     await user.setPassword(password);
     await user.save();
 
-    res.json({ user });
+    res.json({ data: user.serialize(), msg: "가입되었습니다!" });
   } catch (e) {
     console.log(e);
   }

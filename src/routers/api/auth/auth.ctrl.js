@@ -49,7 +49,7 @@ export const signup = async (req, res) => {
     await user.save();
 
     // configure jwt to httpOnly cookie
-    const token = user.generateToken();
+    const token = await user.generateToken();
     res.cookie("jwt", token, {
       maxAge: 1000 * 60 * 60 * 24 * 7, // 7d
       httpOnly: true
@@ -62,6 +62,49 @@ export const signup = async (req, res) => {
   }
 };
 
-export const login = (req, res) => res.send("로그인");
+export const login = async (req, res) => {
+  const { body } = req;
+
+  const schema = Joi.object({
+    email: Joi.string()
+      .email()
+      .required(),
+    password: Joi.string().required()
+  });
+
+  const result = schema.validate(body);
+
+  if (result.error) {
+    res.status(400).json({ msg: result.error });
+    return;
+  }
+
+  const { email, password } = result.value;
+
+  try {
+    // find user
+    const user = await User.findByEmail(email);
+    if (!user) {
+      res.status(403);
+      return;
+    }
+
+    // Validate Password
+    const isValid = user.checkPassword(password);
+    if (!isValid) {
+      res.status(403);
+      return;
+    }
+
+    const token = await user.generateToken();
+    res.cookie("jwt", token, {
+      maxAge: 1000 * 60 * 60 * 24 * 7,
+      httpOnly: true
+    });
+  } catch (e) {
+    console.log(e);
+    res.status(500);
+  }
+};
 
 export const logout = (req, res) => res.send("로그아웃");

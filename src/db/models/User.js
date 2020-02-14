@@ -65,4 +65,8 @@ User.statics.findExistancy = function({ username, email }) {
   });
 };
 
+User.statics.findByEmail = function(email) {
+  return this.findOne({ email });
+};
+
 export default mongoose.model("User", User);

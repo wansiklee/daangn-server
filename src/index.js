@@ -2,12 +2,14 @@ require("dotenv").config();
 
 import express from "express";
 import bodyParser from "body-parser";
+import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import morgan from "morgan";
 import api from "./routers/api";
 import global from "./routers/global";
 import user from "./routers/user";
 import routes from "./routes";
+import jwtMiddleware from "./lib/jwtMiddleware";
 
 // database
 import "./db";
@@ -18,10 +20,12 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 // Express Middlewares
+app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(helmet());
 app.use(morgan("dev"));
+app.use(jwtMiddleware);
 
 // Routes
 app.use(routes.api, api);

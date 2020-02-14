@@ -1,7 +1,9 @@
 import Joi from "@hapi/joi";
 import User from "../../db/models/User";
 
-// POST /api/auth/signup
+/***********************
+  POST /api/auth/signup
+************************/
 export const signup = async (req, res) => {
   const { body } = req;
 
@@ -62,7 +64,9 @@ export const signup = async (req, res) => {
   }
 };
 
-// POST /api/auth/login
+/***********************
+  POST /api/auth/login
+************************/
 export const login = async (req, res) => {
   const { body } = req;
 
@@ -110,7 +114,9 @@ export const login = async (req, res) => {
   }
 };
 
-// GET /api/auth/check
+/**********************
+  GET /api/auth/check
+***********************/
 export const check = async (req, res) => {
   const { user } = req;
 
@@ -122,7 +128,9 @@ export const check = async (req, res) => {
   res.json({ user });
 };
 
-// POST /api/auth/logout
+/***********************
+  POST /api/auth/logout
+************************/
 export const logout = async (req, res) => {
   res.clearCookie("jwt"); // Delete jwt
   res.status(204).json(); // No content

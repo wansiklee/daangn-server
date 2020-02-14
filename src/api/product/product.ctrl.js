@@ -1,3 +1,5 @@
+export const list = (req, res) => res.send("상품 리스트");
+
 export const upload = (req, res) => res.send("상품 등록");
 
 export const productDetail = (req, res) => res.send("상품 상세");

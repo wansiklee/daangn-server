@@ -1,6 +1,6 @@
 import express from "express";
-import routes from "../../routes";
 import {
+  list,
   upload,
   productDetail,
   editProduct,
@@ -10,10 +10,11 @@ import {
 
 const product = express.Router();
 
-product.get(routes.upload, upload);
-product.get(routes.productDetail, productDetail);
-product.get(routes.editProduct, editProduct);
-product.get(routes.deleteProduct, deleteProduct);
-product.get(routes.search, search);
+product.get("/", list);
+product.get("/", upload);
+product.get("/:id", productDetail);
+product.get("/:id", editProduct);
+product.get("/:id", deleteProduct);
+product.get("/search", search);
 
 export default product;

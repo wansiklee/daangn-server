@@ -79,6 +79,21 @@ export const editProduct = async (req, res) => {
   }
 };
 
-export const deleteProduct = (req, res) => res.send("상품 삭제");
+/***********************
+  DELETE /api/products/:id
+************************/
+export const deleteProduct = async (req, res) => {
+  const {
+    params: { id }
+  } = req;
+
+  try {
+    await Product.findByIdAndRemove(id).exec();
+    res.status(204);
+  } catch (e) {
+    console.log(e);
+    res.status(500);
+  }
+};
 
 export const search = (req, res) => res.send("검색");

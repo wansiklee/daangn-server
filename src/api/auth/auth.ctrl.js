@@ -133,5 +133,5 @@ export const check = async (req, res) => {
 ************************/
 export const logout = async (req, res) => {
   res.clearCookie("jwt"); // Delete jwt
-  res.status(204).json(); // No content
+  res.status(204); // No content
 };

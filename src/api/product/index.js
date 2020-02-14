@@ -11,10 +11,10 @@ import {
 const product = express.Router();
 
 product.get("/", list);
-product.get("/", upload);
+product.post("/", upload);
 product.get("/:id", productDetail);
-product.get("/:id", editProduct);
-product.get("/:id", deleteProduct);
+product.patch("/:id", editProduct);
+product.delete("/:id", deleteProduct);
 product.get("/search", search);
 
 export default product;

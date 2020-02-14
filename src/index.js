@@ -5,9 +5,7 @@ import bodyParser from "body-parser";
 import cookieParser from "cookie-parser";
 import helmet from "helmet";
 import morgan from "morgan";
-import api from "./routers/api";
-import global from "./routers/global";
-import user from "./routers/user";
+import api from "./api";
 import routes from "./routes";
 import jwtMiddleware from "./lib/jwtMiddleware";
 
@@ -29,8 +27,6 @@ app.use(jwtMiddleware);
 
 // Routes
 app.use(routes.api, api);
-app.use(routes.home, global);
-app.use(routes.users, user);
 
 app.listen(PORT, () => {
   console.log(`♬  daangn server is listening on port ${PORT}!`);

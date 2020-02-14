@@ -5,3 +5,5 @@ export const productDetail = (req, res) => res.send("상품 상세");
 export const editProduct = (req, res) => res.send("상품 수정");
 
 export const deleteProduct = (req, res) => res.send("상품 삭제");
+
+export const search = (req, res) => res.send("검색");

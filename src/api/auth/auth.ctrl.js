@@ -1,5 +1,5 @@
 import Joi from "@hapi/joi";
-import User from "../../../db/models/User";
+import User from "../../db/models/User";
 
 // POST /api/auth/signup
 export const signup = async (req, res) => {

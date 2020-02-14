@@ -1,6 +1,17 @@
 import Product from "../../db/models/Product";
 
-export const list = (req, res) => res.send("상품 리스트");
+/***********************
+  GET /api/products
+************************/
+export const list = async (req, res) => {
+  try {
+    const products = await Product.find().exec();
+    res.json({ data: products });
+  } catch (e) {
+    console.log(e);
+    res.status(500);
+  }
+};
 
 /***********************
   POST /api/products

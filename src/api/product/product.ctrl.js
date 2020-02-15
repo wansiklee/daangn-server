@@ -1,3 +1,4 @@
+import Joi from "@hapi/joi";
 import Product from "../../db/models/Product";
 
 /***********************
@@ -17,9 +18,23 @@ export const list = async (req, res) => {
   POST /api/products
 ************************/
 export const upload = async (req, res) => {
-  const {
-    body: { title, description, price }
-  } = req;
+  const { body } = req;
+
+  const schema = Joi.object({
+    title: Joi.string().required(),
+    description: Joi.string().required(),
+    price: Joi.number().required()
+  });
+
+  const result = schema.validate(body);
+
+  if (result.error) {
+    res.status(400).json({ msg: result.error });
+    return;
+  }
+
+  const { title, description, price } = result.value;
+
   const product = new Product({
     title,
     description,
@@ -64,6 +79,20 @@ export const editProduct = async (req, res) => {
     params: { id },
     body
   } = req;
+
+  const schema = Joi.object({
+    title: Joi.string(),
+    description: Joi.string(),
+    price: Joi.number()
+  });
+
+  const result = schema.validate(body);
+
+  if (result.error) {
+    res.status(400).json({ msg: result.error });
+    return;
+  }
+
   try {
     const product = await Product.findByIdAndUpdate(id, body, {
       new: true

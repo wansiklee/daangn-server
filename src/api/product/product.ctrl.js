@@ -6,7 +6,9 @@ import Product from "../../db/models/Product";
 ************************/
 export const list = async (req, res) => {
   try {
-    const products = await Product.find().exec();
+    const products = await Product.find()
+      .sort({ _id: -1 })
+      .exec();
     res.json({ data: products });
   } catch (e) {
     console.log(e);
@@ -135,7 +137,9 @@ export const search = async (req, res) => {
   try {
     const products = await Product.find({
       title: { $regex: term, $options: "i" }
-    }).exec();
+    })
+      .sort({ _id: -1 })
+      .exec();
     console.log(products);
     if (!products) {
       res.json({ msg: "검색 결과가 없습니다." });

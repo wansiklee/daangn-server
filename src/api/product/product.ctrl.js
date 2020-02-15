@@ -19,12 +19,21 @@ export const list = async (req, res) => {
       .sort({ _id: -1 })
       .limit(12)
       .skip((intPage - 1) * 12)
+      .lean()
       .exec();
 
     const productsNum = await Product.countDocuments().exec();
     res.set("Last-Page", Math.ceil(productsNum / 12));
 
-    res.json({ data: products });
+    res.json({
+      data: products.map(product => ({
+        name:
+          product.name.length < 12
+            ? product.name
+            : `${product.name.slice(0, 12)}...`,
+        price: product.price
+      }))
+    });
   } catch (e) {
     console.log(e);
     res.status(500);
@@ -38,7 +47,7 @@ export const upload = async (req, res) => {
   const { body } = req;
 
   const schema = Joi.object({
-    title: Joi.string().required(),
+    name: Joi.string().required(),
     description: Joi.string().required(),
     price: Joi.number().required()
   });
@@ -50,10 +59,10 @@ export const upload = async (req, res) => {
     return;
   }
 
-  const { title, description, price } = result.value;
+  const { name, description, price } = result.value;
 
   const product = new Product({
-    title,
+    name,
     description,
     price
   });
@@ -98,7 +107,7 @@ export const editProduct = async (req, res) => {
   } = req;
 
   const schema = Joi.object({
-    title: Joi.string(),
+    name: Joi.string(),
     description: Joi.string(),
     price: Joi.number()
   });
@@ -158,7 +167,7 @@ export const search = async (req, res) => {
 
   try {
     const products = await Product.find({
-      title: { $regex: term, $options: "i" }
+      name: { $regex: term, $options: "i" }
     })
       .sort({ _id: -1 })
       .limit(12)
@@ -172,7 +181,15 @@ export const search = async (req, res) => {
       res.json({ msg: "검색 결과가 없습니다." });
       return;
     }
-    res.json({ data: products });
+    res.json({
+      data: products.map(product => ({
+        name:
+          product.name.length < 12
+            ? product.name
+            : `${product.name.slice(0, 12)}...`,
+        price: product.price
+      }))
+    });
   } catch (e) {
     console.log(e);
     res.status(500);

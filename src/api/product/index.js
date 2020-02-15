@@ -7,14 +7,15 @@ import {
   deleteProduct,
   search
 } from "./product.ctrl";
+import checkObjectId from "../../lib/checkObjectId";
 
 const product = express.Router();
 
 product.get("/", list);
 product.post("/", upload);
 product.get("/search", search);
-product.get("/:id", productDetail);
-product.patch("/:id", editProduct);
-product.delete("/:id", deleteProduct);
+product.get("/:id", checkObjectId, productDetail);
+product.patch("/:id", checkObjectId, editProduct);
+product.delete("/:id", checkObjectId, deleteProduct);
 
 export default product;

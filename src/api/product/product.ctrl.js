@@ -5,10 +5,25 @@ import Product from "../../db/models/Product";
   GET /api/products
 ************************/
 export const list = async (req, res) => {
+  const {
+    query: { page }
+  } = req;
+
+  const intPage = parseInt(page || "1", 10);
+  if (intPage < 1) {
+    res.status(400);
+    return;
+  }
   try {
     const products = await Product.find()
       .sort({ _id: -1 })
+      .limit(12)
+      .skip((intPage - 1) * 12)
       .exec();
+
+    const productsNum = await Product.countDocuments().exec();
+    res.set("Last-Page", Math.ceil(productsNum / 12));
+
     res.json({ data: products });
   } catch (e) {
     console.log(e);
@@ -132,15 +147,27 @@ export const deleteProduct = async (req, res) => {
 ****************************/
 export const search = async (req, res) => {
   const {
-    query: { term }
+    query: { term, page }
   } = req;
+
+  const intPage = parseInt(page || "1", 10);
+  if (intPage < 1) {
+    res.status(400);
+    return;
+  }
+
   try {
     const products = await Product.find({
       title: { $regex: term, $options: "i" }
     })
       .sort({ _id: -1 })
+      .limit(12)
+      .skip((intPage - 1) * 12)
       .exec();
-    console.log(products);
+
+    const productsNum = await Product.countDocuments().exec();
+    res.set("Last-Page", Math.ceil(productsNum / 12));
+
     if (!products) {
       res.json({ msg: "검색 결과가 없습니다." });
       return;

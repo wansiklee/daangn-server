@@ -71,7 +71,8 @@ export const upload = async (req, res) => {
     description,
     price,
     category,
-    location
+    location,
+    user: req.user
   });
 
   try {

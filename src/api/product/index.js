@@ -8,14 +8,15 @@ import {
   search
 } from "./product.ctrl";
 import checkObjectId from "../../lib/checkObjectId";
+import checkLoggedIn from "../../lib/checkLoggedIn";
 
 const product = express.Router();
 
 product.get("/", list);
-product.post("/", upload);
+product.post("/", checkLoggedIn, upload);
 product.get("/search", search);
 product.get("/:id", checkObjectId, productDetail);
-product.patch("/:id", checkObjectId, editProduct);
-product.delete("/:id", checkObjectId, deleteProduct);
+product.patch("/:id", checkObjectId, checkLoggedIn, editProduct);
+product.delete("/:id", checkObjectId, checkLoggedIn, deleteProduct);
 
 export default product;

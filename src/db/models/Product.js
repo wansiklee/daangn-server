@@ -11,14 +11,20 @@ const Product = new Schema({
   updatedAt: {
     type: Date,
     default: Date.now
-  }
+  },
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User"
+  },
+  comments: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Comment"
+    }
+  ]
   /*
     To Do
-    -file URL
-    -User
     -Category
-    -Views
-    -Comments
     -Likes
   */
 });

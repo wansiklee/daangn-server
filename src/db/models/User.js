@@ -20,7 +20,13 @@ const User = new Schema({
   createdAt: {
     type: Date,
     default: Date.now
-  }
+  },
+  products: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Product"
+    }
+  ]
 });
 
 // Password Encrypt

@@ -4,6 +4,8 @@ const Product = new Schema({
   name: String,
   description: String,
   price: Number,
+  category: String,
+  location: String,
   createdAt: {
     type: Date,
     default: Date.now
@@ -28,6 +30,11 @@ const Product = new Schema({
       ref: "Like"
     }
   ]
+  /*
+   To do
+   - Files Url 
+   - Views
+   */
 });
 
 export default mongoose.model("Product", Product);

@@ -31,7 +31,10 @@ export const list = async (req, res) => {
           product.name.length < 12
             ? product.name
             : `${product.name.slice(0, 12)}...`,
-        price: product.price
+        location: product.location,
+        price: product.price,
+        likes: product.likes,
+        comments: product.comments
       }))
     });
   } catch (e) {
@@ -49,7 +52,9 @@ export const upload = async (req, res) => {
   const schema = Joi.object({
     name: Joi.string().required(),
     description: Joi.string().required(),
-    price: Joi.number().required()
+    price: Joi.number().required(),
+    category: Joi.string().required(),
+    location: Joi.string().required()
   });
 
   const result = schema.validate(body);
@@ -59,12 +64,14 @@ export const upload = async (req, res) => {
     return;
   }
 
-  const { name, description, price } = result.value;
+  const { name, description, price, category, location } = result.value;
 
   const product = new Product({
     name,
     description,
-    price
+    price,
+    category,
+    location
   });
 
   try {
@@ -109,7 +116,9 @@ export const editProduct = async (req, res) => {
   const schema = Joi.object({
     name: Joi.string(),
     description: Joi.string(),
-    price: Joi.number()
+    price: Joi.number(),
+    category: Joi.string(),
+    location: Joi.string()
   });
 
   const result = schema.validate(body);
@@ -187,7 +196,10 @@ export const search = async (req, res) => {
           product.name.length < 12
             ? product.name
             : `${product.name.slice(0, 12)}...`,
-        price: product.price
+        location: product.location,
+        price: product.price,
+        likes: product.likes,
+        comments: product.comments
       }))
     });
   } catch (e) {

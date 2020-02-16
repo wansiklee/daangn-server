@@ -21,12 +21,13 @@ const Product = new Schema({
       type: mongoose.Schema.Types.ObjectId,
       ref: "Comment"
     }
+  ],
+  likes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Like"
+    }
   ]
-  /*
-    To Do
-    -Category
-    -Likes
-  */
 });
 
 export default mongoose.model("Product", Product);

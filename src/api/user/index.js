@@ -1,10 +1,10 @@
 import express from "express";
-import { userDetail, editProfile, changePassword } from "./user.ctrl";
+import { userDetail } from "./user.ctrl";
+import checkLoggedIn from "../../lib/checkLoggedIn";
+import getUserById from "../../lib/getUserById";
 
 const user = express.Router();
 
-user.get("/:id", userDetail);
-user.get("/:id", editProfile);
-user.get("/:id", changePassword);
+user.get("/:id", checkLoggedIn, getUserById, userDetail);
 
 export default user;

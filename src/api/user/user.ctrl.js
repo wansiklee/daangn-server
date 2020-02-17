@@ -1,5 +1,7 @@
-export const userDetail = (req, res) => res.send("프로필");
-
-export const editProfile = (req, res) => res.send("프로필 수정");
-
-export const changePassword = (req, res) => res.send("비밀번호 변경");
+/***********************
+  GET /api/users/:id
+************************/
+export const userDetail = async (req, res) => {
+  const { data } = req;
+  res.json({ data: data.serialize() });
+};

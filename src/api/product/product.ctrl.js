@@ -88,21 +88,8 @@ export const upload = async (req, res) => {
   GET /api/products/:id
 ************************/
 export const productDetail = async (req, res) => {
-  const {
-    params: { id }
-  } = req;
-
-  try {
-    const product = await Product.findById(id).exec();
-    if (!product) {
-      res.status(404); // Not Found
-      return;
-    }
-    res.json({ data: product });
-  } catch (e) {
-    console.log(e);
-    res.status(500);
-  }
+  const { body } = req;
+  res.json({ data: body });
 };
 
 /***********************

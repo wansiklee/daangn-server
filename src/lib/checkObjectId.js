@@ -15,7 +15,7 @@ const checkObjectId = async (req, res, next) => {
       res.status(404);
       return;
     }
-    req.body = product;
+    req.data = product;
     return next();
   } catch (e) {
     res.status(500);

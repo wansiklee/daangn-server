@@ -88,8 +88,8 @@ export const upload = async (req, res) => {
   GET /api/products/:id
 ************************/
 export const productDetail = async (req, res) => {
-  const { body } = req;
-  res.json({ data: body });
+  const { data } = req;
+  res.json({ data });
 };
 
 /***********************

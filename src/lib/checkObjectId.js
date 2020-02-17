@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
+import Product from "../db/models/Product";
 
-const checkObjectId = (req, res, next) => {
+const checkObjectId = async (req, res, next) => {
   const {
     params: { id }
   } = req;
@@ -8,7 +9,17 @@ const checkObjectId = (req, res, next) => {
     res.status(400);
     return;
   }
-  return next();
+  try {
+    const product = await Product.findById(id);
+    if (!product) {
+      res.status(404);
+      return;
+    }
+    req.body = product;
+    return next();
+  } catch (e) {
+    res.status(500);
+  }
 };
 
 export default checkObjectId;

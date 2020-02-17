@@ -4,7 +4,7 @@ const Product = new Schema({
   name: String,
   description: String,
   price: Number,
-  category: String,
+  category: Number,
   location: String,
   createdAt: {
     type: Date,

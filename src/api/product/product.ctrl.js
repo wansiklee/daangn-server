@@ -53,7 +53,7 @@ export const upload = async (req, res) => {
     name: Joi.string().required(),
     description: Joi.string().required(),
     price: Joi.number().required(),
-    category: Joi.string().required(),
+    category: Joi.number().required(),
     location: Joi.string().required()
   });
 
@@ -105,7 +105,7 @@ export const editProduct = async (req, res) => {
     name: Joi.string(),
     description: Joi.string(),
     price: Joi.number(),
-    category: Joi.string(),
+    category: Joi.number(),
     location: Joi.string()
   });
 

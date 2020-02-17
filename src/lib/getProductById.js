@@ -1,7 +1,7 @@
 import mongoose from "mongoose";
 import Product from "../db/models/Product";
 
-const checkObjectId = async (req, res, next) => {
+const getProductById = async (req, res, next) => {
   const {
     params: { id }
   } = req;
@@ -22,4 +22,4 @@ const checkObjectId = async (req, res, next) => {
   }
 };
 
-export default checkObjectId;
+export default getProductById;

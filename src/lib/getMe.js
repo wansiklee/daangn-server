@@ -10,12 +10,13 @@ const getMeById = async (req, res, next) => {
     return;
   }
   try {
-    const user = await User.findById(_id);
-    if (!user) {
+    const me = await User.findById(_id).populate("products");
+
+    if (!me) {
       res.status(404);
       return;
     }
-    req.user = user;
+    req.me = me;
     return next();
   } catch (e) {
     res.status(500);

@@ -1,5 +1,6 @@
 import Joi from "@hapi/joi";
 import Product from "../../db/models/Product";
+import User from "../../db/models/User";
 
 /***********************
   GET /api/products
@@ -82,6 +83,9 @@ export const upload = async (req, res) => {
   });
 
   try {
+    const user = await User.findById(req.user._id);
+    await user.products.push(product._id);
+    await user.save();
     await product.save();
     res.json({ data: product });
   } catch (e) {

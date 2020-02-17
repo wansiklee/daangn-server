@@ -5,8 +5,8 @@ import User from "../../db/models/User";
   GET /api/me
 ************************/
 export const meDetail = (req, res) => {
-  const { user } = req;
-  res.json({ data: user.serialize() });
+  const { me } = req;
+  res.json({ data: me.serialize() });
 };
 
 /***********************

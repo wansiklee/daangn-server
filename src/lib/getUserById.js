@@ -10,7 +10,7 @@ const getUserById = async (req, res, next) => {
     return;
   }
   try {
-    const user = await User.findById(id);
+    const user = await User.findById(id).populate("products");
     if (!user) {
       res.status(404);
       return;

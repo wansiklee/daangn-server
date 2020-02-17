@@ -6,7 +6,7 @@ import Product from "../../db/models/Product";
 ************************/
 export const list = async (req, res) => {
   const {
-    query: { page }
+    query: { page, category, location }
   } = req;
 
   const intPage = parseInt(page || "1", 10);
@@ -14,15 +14,21 @@ export const list = async (req, res) => {
     res.status(400);
     return;
   }
+
+  const query = {
+    ...(category ? { category: category } : {}),
+    ...(location ? { location: location } : {})
+  };
+
   try {
-    const products = await Product.find()
+    const products = await Product.find(query)
       .sort({ _id: -1 })
       .limit(12)
       .skip((intPage - 1) * 12)
       .lean()
       .exec();
 
-    const productsNum = await Product.countDocuments().exec();
+    const productsNum = await Product.countDocuments(query).exec();
     res.set("Last-Page", Math.ceil(productsNum / 12));
 
     res.json({
@@ -153,7 +159,7 @@ export const deleteProduct = async (req, res) => {
 ****************************/
 export const search = async (req, res) => {
   const {
-    query: { term, page }
+    query: { term, page, category, location }
   } = req;
 
   const intPage = parseInt(page || "1", 10);
@@ -162,8 +168,14 @@ export const search = async (req, res) => {
     return;
   }
 
+  const query = {
+    ...(category ? { category: category } : {}),
+    ...(location ? { location: location } : {})
+  };
+
   try {
     const products = await Product.find({
+      ...query,
       name: { $regex: term, $options: "i" }
     })
       .sort({ _id: -1 })
@@ -171,7 +183,7 @@ export const search = async (req, res) => {
       .skip((intPage - 1) * 12)
       .exec();
 
-    const productsNum = await Product.countDocuments().exec();
+    const productsNum = await Product.countDocuments(query).exec();
     res.set("Last-Page", Math.ceil(productsNum / 12));
 
     if (!products) {

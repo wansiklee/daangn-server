@@ -26,7 +26,7 @@ export const signup = async (req, res) => {
   const result = schema.validate(body);
 
   if (result.error) {
-    res.status(400).json({ msg: result.error });
+    res.status(400).json({ msg: "회원가입 양식을 지켜주세요" });
     return;
   }
 
@@ -57,7 +57,7 @@ export const signup = async (req, res) => {
       httpOnly: true
     });
 
-    res.json({ data: user.serialize(), msg: "가입되었습니다!" });
+    res.json({ data: user.serialize() });
   } catch (e) {
     console.log(e);
     res.status(500);
@@ -80,7 +80,7 @@ export const login = async (req, res) => {
   const result = schema.validate(body);
 
   if (result.error) {
-    res.status(400).json({ msg: result.error });
+    res.status(400).json({ msg: "이메일 또는 비밀번호가 유효하지 않습니다." });
     return;
   }
 
@@ -90,14 +90,14 @@ export const login = async (req, res) => {
     // find user
     const user = await User.findByEmail(email);
     if (!user) {
-      res.status(403);
+      res.status(403).json({ msg: "이메일이 존재하지 않습니다." });
       return;
     }
 
     // Validate Password
-    const isValid = user.checkPassword(password);
+    const isValid = await user.checkPassword(password);
     if (!isValid) {
-      res.status(403);
+      res.status(403).json({ msg: "비밀번호가 일치하지 않습니다." });
       return;
     }
 
@@ -107,7 +107,7 @@ export const login = async (req, res) => {
       httpOnly: true
     });
 
-    res.json({ data: user.serialize(), msg: "로그인 되었습니다!" });
+    res.json({ data: user.serialize() });
   } catch (e) {
     console.log(e);
     res.status(500);

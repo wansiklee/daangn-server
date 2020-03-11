@@ -12,7 +12,9 @@ const storage = multer.diskStorage({
 export const uploadImage = multer({ storage }).single("image");
 
 export const uploadController = (req, res) => {
-  const { file } = req;
-  console.log(file);
-  return res.json({ file });
+  const {
+    file: { path }
+  } = req;
+
+  return res.json({ path });
 };

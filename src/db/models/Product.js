@@ -1,11 +1,11 @@
 import mongoose, { Schema } from "mongoose";
 
 const Product = new Schema({
-  name: String,
+  image: String,
+  title: String,
   description: String,
   price: Number,
   category: Number,
-  location: String,
   createdAt: {
     type: Date,
     default: Date.now
@@ -32,7 +32,6 @@ const Product = new Schema({
   ]
   /*
    To do
-   - Files Url 
    - Views
    */
 });

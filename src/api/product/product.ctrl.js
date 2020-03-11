@@ -7,7 +7,7 @@ import User from "../../db/models/User";
 ************************/
 export const list = async (req, res) => {
   const {
-    query: { page, category, location }
+    query: { page, category }
   } = req;
 
   const intPage = parseInt(page || "1", 10);
@@ -17,8 +17,7 @@ export const list = async (req, res) => {
   }
 
   const query = {
-    ...(category ? { category: category } : {}),
-    ...(location ? { location: location } : {})
+    ...(category ? { category: category } : {})
   };
 
   try {
@@ -34,11 +33,11 @@ export const list = async (req, res) => {
 
     res.json({
       data: products.map(product => ({
-        name:
-          product.name.length < 12
-            ? product.name
-            : `${product.name.slice(0, 12)}...`,
-        location: product.location,
+        title:
+          product.title.length < 12
+            ? product.title
+            : `${product.title.slice(0, 12)}...`,
+        image: product.image,
         price: product.price,
         likes: product.likes,
         comments: product.comments
@@ -57,28 +56,28 @@ export const upload = async (req, res) => {
   const { body } = req;
 
   const schema = Joi.object({
-    name: Joi.string().required(),
+    image: Joi.string(),
+    title: Joi.string().required(),
     description: Joi.string().required(),
     price: Joi.number().required(),
-    category: Joi.number().required(),
-    location: Joi.string().required()
+    category: Joi.number().required()
   });
 
   const result = schema.validate(body);
 
   if (result.error) {
-    res.status(400).json({ msg: result.error });
+    res.status(400).json({ msg: "모든 항목을 채워주세요" });
     return;
   }
 
-  const { name, description, price, category, location } = result.value;
+  const { image, title, description, price, category } = result.value;
 
   const product = new Product({
-    name,
+    image,
+    title,
     description,
     price,
     category,
-    location,
     user: req.user
   });
 
@@ -112,11 +111,10 @@ export const editProduct = async (req, res) => {
   } = req;
 
   const schema = Joi.object({
-    name: Joi.string(),
+    title: Joi.string(),
     description: Joi.string(),
     price: Joi.number(),
-    category: Joi.number(),
-    location: Joi.string()
+    category: Joi.number()
   });
 
   const result = schema.validate(body);
@@ -163,7 +161,7 @@ export const deleteProduct = async (req, res) => {
 ****************************/
 export const search = async (req, res) => {
   const {
-    query: { term, page, category, location }
+    query: { term, page, category }
   } = req;
 
   const intPage = parseInt(page || "1", 10);
@@ -173,14 +171,13 @@ export const search = async (req, res) => {
   }
 
   const query = {
-    ...(category ? { category: category } : {}),
-    ...(location ? { location: location } : {})
+    ...(category ? { category: category } : {})
   };
 
   try {
     const products = await Product.find({
       ...query,
-      name: { $regex: term, $options: "i" }
+      title: { $regex: term, $options: "i" }
     })
       .sort({ _id: -1 })
       .limit(12)
@@ -196,11 +193,10 @@ export const search = async (req, res) => {
     }
     res.json({
       data: products.map(product => ({
-        name:
-          product.name.length < 12
-            ? product.name
-            : `${product.name.slice(0, 12)}...`,
-        location: product.location,
+        title:
+          product.title.length < 12
+            ? product.title
+            : `${product.title.slice(0, 12)}...`,
         price: product.price,
         likes: product.likes,
         comments: product.comments

@@ -86,7 +86,7 @@ export const upload = async (req, res) => {
     await user.products.push(product._id);
     await user.save();
     await product.save();
-    res.json({ data: product });
+    res.json({ product });
   } catch (e) {
     console.log(e);
     res.status(500);

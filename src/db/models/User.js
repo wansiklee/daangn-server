@@ -5,7 +5,11 @@ import jwt from "jsonwebtoken";
 const User = new Schema({
   username: String,
   email: String,
-  thumbnail: String,
+  thumbnail: {
+    type: String,
+    default:
+      "https://d1unjqcospf8gs.cloudfront.net/assets/users/default_profile_80-7e50c459a71e0e88c474406a45bbbdce8a3bf2ed4f2efcae59a064e39ea9ff30.png"
+  },
   social: {
     facebook: {
       id: String,

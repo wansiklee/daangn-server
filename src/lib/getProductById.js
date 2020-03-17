@@ -10,7 +10,10 @@ const getProductById = async (req, res, next) => {
     return;
   }
   try {
-    const product = await Product.findById(id).populate("user", "_id username");
+    const product = await Product.findById(id).populate(
+      "user",
+      "_id username thumbnail"
+    );
     if (!product) {
       res.status(404);
       return;

@@ -3,7 +3,7 @@ import Product from "../../db/models/Product";
 import User from "../../db/models/User";
 
 /***********************
-  GET /api/products
+  GET /api/products?category=&page=
 ************************/
 export const list = async (req, res) => {
   const {
@@ -33,6 +33,7 @@ export const list = async (req, res) => {
 
     res.json({
       data: products.map(product => ({
+        id: product._id,
         title:
           product.title.length < 12
             ? product.title
@@ -193,6 +194,7 @@ export const search = async (req, res) => {
     }
     res.json({
       data: products.map(product => ({
+        id: product._id,
         title:
           product.title.length < 12
             ? product.title

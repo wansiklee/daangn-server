@@ -29,7 +29,7 @@ export const list = async (req, res) => {
       .exec();
 
     const productsNum = await Product.countDocuments(query).exec();
-    res.set("Last-Page", Math.ceil(productsNum / 12));
+    res.set("LastPage", Math.ceil(productsNum / 12));
 
     res.json({
       data: products.map(product => ({
@@ -157,12 +157,12 @@ export const deleteProduct = async (req, res) => {
   }
 };
 
-/***************************
-  GET /api/products/search
-****************************/
+/********************************
+  GET /api/products/search?term=
+*********************************/
 export const search = async (req, res) => {
   const {
-    query: { term, page, category }
+    query: { term, page }
   } = req;
 
   const intPage = parseInt(page || "1", 10);
@@ -171,22 +171,17 @@ export const search = async (req, res) => {
     return;
   }
 
-  const query = {
-    ...(category ? { category: category } : {})
-  };
-
   try {
     const products = await Product.find({
-      ...query,
       title: { $regex: term, $options: "i" }
     })
       .sort({ _id: -1 })
-      .limit(12)
-      .skip((intPage - 1) * 12)
+      .limit(6)
+      .skip((intPage - 1) * 6)
       .exec();
 
-    const productsNum = await Product.countDocuments(query).exec();
-    res.set("Last-Page", Math.ceil(productsNum / 12));
+    const productsNum = await Product.countDocuments().exec();
+    res.set("LastPage", Math.ceil(productsNum / 6));
 
     if (!products) {
       res.json({ msg: "검색 결과가 없습니다." });
@@ -196,9 +191,10 @@ export const search = async (req, res) => {
       data: products.map(product => ({
         id: product._id,
         title:
-          product.title.length < 12
+          product.title.length < 15
             ? product.title
-            : `${product.title.slice(0, 12)}...`,
+            : `${product.title.slice(0, 15)}...`,
+        image: product.image,
         price: product.price,
         likes: product.likes,
         comments: product.comments

@@ -176,11 +176,10 @@ export const search = async (req, res) => {
       title: { $regex: term, $options: "i" }
     })
       .sort({ _id: -1 })
-      .limit(6)
-      .skip((intPage - 1) * 6)
+      .limit(intPage * 6)
       .exec();
 
-    const productsNum = await Product.countDocuments().exec();
+    const productsNum = products.length;
     res.set("LastPage", Math.ceil(productsNum / 6));
 
     if (!products) {

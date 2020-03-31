@@ -112,16 +112,17 @@ export const editProduct = async (req, res) => {
   } = req;
 
   const schema = Joi.object({
-    title: Joi.string(),
-    description: Joi.string(),
-    price: Joi.number(),
-    category: Joi.number()
+    image: Joi.string(),
+    title: Joi.string().required(),
+    description: Joi.string().required(),
+    price: Joi.number().required(),
+    category: Joi.number().required()
   });
 
   const result = schema.validate(body);
 
   if (result.error) {
-    res.status(400).json({ msg: result.error });
+    res.status(400).json({ msg: "모든 항목을 채워주세요" });
     return;
   }
 
@@ -133,7 +134,7 @@ export const editProduct = async (req, res) => {
       res.status(404); // Not Found
       return;
     }
-    res.json({ data: product });
+    res.json({ product });
   } catch (e) {
     console.log(e);
     res.status(500);
@@ -149,8 +150,12 @@ export const deleteProduct = async (req, res) => {
   } = req;
 
   try {
-    await Product.findByIdAndRemove(id).exec();
-    res.status(204);
+    const product = await Product.findByIdAndRemove(id).exec();
+    const user = await User.findById(req.user._id);
+    await user.products.pull(product._id);
+    await user.save();
+    res.status(204).json({});
+    return;
   } catch (e) {
     console.log(e);
     res.status(500);

@@ -184,7 +184,7 @@ export const search = async (req, res) => {
       .limit(intPage * 6)
       .exec();
 
-    const productsNum = products.length;
+    const productsNum = await Product.countDocuments().exec();
     res.set("LastPage", Math.ceil(productsNum / 6));
 
     if (!products) {
